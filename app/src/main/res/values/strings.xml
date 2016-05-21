@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ProdukTKPD</string>
+    <string name="label_search">Pencarian</string>
+    <string name="label_search_hint">Kata kunci</string>
+
+     <!-- Product -->
+    <string name="product_name">Nama Produk</string>
+    <string name="product_price">Harga Produk</string>
+    <string name="shop_name">Nama Toko</string>
+</resources>
