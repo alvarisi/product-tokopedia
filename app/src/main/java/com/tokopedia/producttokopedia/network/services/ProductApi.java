@@ -18,4 +18,10 @@ public interface ProductApi {
                                                    @Query("q") String q,
                                                    @Query("rows") String rows
                                             );
+    @GET(ProductTkpd.Product.SEARCH)
+    Observable<Response<BaseResponse>> moreProduct(@Query("device") String device,
+                                                   @Query("q") String q,
+                                                   @Query("rows") String rows,
+                                                   @Query("start") String start
+                                                   );
 }

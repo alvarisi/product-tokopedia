@@ -14,6 +14,7 @@ import org.json.JSONObject;
 public class BaseResponse {
     private JSONObject jresult;
     private String sresult;
+    private static String originResult;
     private Object object;
     private Gson gson = new GsonBuilder()
             .disableHtmlEscaping()
@@ -21,6 +22,7 @@ public class BaseResponse {
             .create();
     public static BaseResponse factory(String response){
         JSONObject jb , jresult;
+        originResult = response;
         try {
             jb = new JSONObject(response);
             jresult = jb.getJSONObject("result");
@@ -36,6 +38,9 @@ public class BaseResponse {
     public void setJresult(JSONObject jresult) {
         this.jresult = jresult;
         this.sresult = jresult.toString();
+    }
+    public String getOriginResult(){
+        return originResult;
     }
 //    @SuppressWarnings("unchecked")
     public <T> T convertResult(Class<T> c){

@@ -42,6 +42,8 @@ public class ProductSearchResponse implements Parcelable {
         this.product = product;
     }
 
+    public ProductSearchResponse(){}
+
     public ProductSearchResponse(List<Product> product, String searchUrl,
                                  String shareUrl, String st, String hasCatalog, String hashtag,
                                  String breadcrumb, String departmentId, String locations,

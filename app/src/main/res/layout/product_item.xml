@@ -2,11 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="1dp"
+    android:paddingBottom="5dp"
     >
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:id="@+id/ivImage"
         />
     <LinearLayout

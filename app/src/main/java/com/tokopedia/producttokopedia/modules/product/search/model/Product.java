@@ -50,7 +50,7 @@ public class Product implements Parcelable {
     @SerializedName("shop_gold_status")
     public String shopGold;
 
-
+    public Product(){}
 
     public Product(int shopId, String shopLucky, int productId, String condition,
                    String productPrice, String productReview, String productSoldCount,

@@ -8,11 +8,13 @@ import com.tokopedia.producttokopedia.modules.product.search.interactor.ProductS
 import com.tokopedia.producttokopedia.modules.product.search.interactor.ProductSearchInteractorImpl;
 import com.tokopedia.producttokopedia.network.reponses.ProductSearchResponse;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+
 /**
  * Created by Tokopedia01 on 5/19/2016.
  */
-public class ProductSearchPresenterImpl implements ProductSearchPresenter,
-        ProductSearchInteractor.OnKeywordListener {
+public class ProductSearchPresenterImpl implements ProductSearchPresenter{
     private ProductSearchView productSearchView;
     private ProductSearchInteractor productSearchInteractor;
     public ProductSearchPresenterImpl(ProductSearchView productSearchView){
@@ -33,8 +35,7 @@ public class ProductSearchPresenterImpl implements ProductSearchPresenter,
 
             @Override
             public void onSuccess(@NonNull ProductSearchResponse product) {
-                Log.v("TKPDRESPONSE", "size " + product.toString());
-                productSearchView.setList(product.product);
+                productSearchView.setList(product);
                 productSearchView.hideProgress();
             }
 
@@ -48,28 +49,31 @@ public class ProductSearchPresenterImpl implements ProductSearchPresenter,
     }
 
     @Override
+    public void getMoreProduct(String url)  {
+        try {
+            this.productSearchInteractor.moreProduct(url, new ProductSearchInteractor.onLoadMoreListener() {
+                @Override
+                public void onSuccess(@NonNull ProductSearchResponse product) {
+                    productSearchView.setMoreList(product);
+                    productSearchView.hideProgress();
+                }
+
+                @Override
+                public void onError() {
+                    Log.v("TKPD", "GAGAGAL");
+                }
+            });
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
     public void onDestroy() {
         productSearchView = null;
     }
 
-    @Override
-    public void onKeywordError() {
-        if (productSearchView != null){
-            productSearchView.setKeywordError();
-            productSearchView.hideProgress();
-        }
-    }
-
-    @Override
-    public void onSuccess(ProductSearchResponse product) {
-        productSearchView.setList(product.product);
-        productSearchView.hideProgress();
-    }
-
-    @Override
-    public void onError() {
-        if (productSearchView != null) {
-            productSearchView.hideProgress();
-        }
-    }
 }
