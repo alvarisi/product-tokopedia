@@ -43,12 +43,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
-        holder.tvName.setText(this.products.get(position).getProductName());
+        String productName = this.products.get(position).getProductName();
+        if (!productName.isEmpty())
+            if (productName.length() > 20){
+                productName = productName.substring(0, 19) + "...";
+            }
+        holder.tvName.setText(productName);
         holder.tvPrice.setText(this.products.get(position).getProductPrice());
         holder.tvShopName.setText(this.products.get(position).getShopName());
         Uri uri = Uri.parse(this.products.get(position).getProductImage());
         holder.ivImage.setImageURI(uri);
-
 
         if (position == getItemCount() - VISIBLE_THRESHOLD) {
             if (endlessScrollListener != null) {

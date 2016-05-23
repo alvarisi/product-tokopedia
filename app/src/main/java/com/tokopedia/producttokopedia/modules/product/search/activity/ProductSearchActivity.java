@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.support.v7.widget.SearchView;
 import com.tokopedia.producttokopedia.R;
-import com.tokopedia.producttokopedia.modules.product.search.adapter.EndlessRecyclerViewScrollListener;
 import com.tokopedia.producttokopedia.modules.product.search.adapter.ProductAdapter;
 import com.tokopedia.producttokopedia.modules.product.search.presenter.ProductSearchPresenter;
 import com.tokopedia.producttokopedia.modules.product.search.presenter.ProductSearchPresenterImpl;
@@ -63,33 +63,14 @@ public class ProductSearchActivity extends AppCompatActivity implements ProductS
         adapter = new ProductAdapter(this.products);
         adapter.setEndlessScrollListener(this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         rvListProduct.setLayoutManager(layoutManager);
         rvListProduct.setItemAnimator(new DefaultItemAnimator());
         rvListProduct.setHasFixedSize(true);
-        rvListProduct.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount) throws MalformedURLException, UnsupportedEncodingException {
-                loadmore();
-            }
-        });
         rvListProduct.setAdapter(adapter);
 
         if (getIntent()!=null)
             onSearchEvent(getIntent());
-    }
-    void loadmore() throws MalformedURLException, UnsupportedEncodingException {
-        if (!pagingResponse.getUriNext().isEmpty())
-        presenter.getMoreProduct(pagingResponse.getUriNext());
-    }
-    void testingView(){
-        Product product = new Product();
-        product.setProductName("testing");
-        product.setShopName("testing");
-        product.setProductPrice("testing");
-        product.setProductImage("https://raw.githubusercontent.com/facebook/fresco/gh-pages/static/logo.png");
-        products.add(product);
-        products.add(product);
     }
 
     @Override
