@@ -60,7 +60,7 @@ public class ProductSearchActivity extends AppCompatActivity implements ProductS
         ButterKnife.bind(this);
 
         presenter = new ProductSearchPresenterImpl(this);
-        adapter = new ProductAdapter(this.products);
+        adapter = new ProductAdapter(getApplicationContext(), this.products);
         adapter.setEndlessScrollListener(this);
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);

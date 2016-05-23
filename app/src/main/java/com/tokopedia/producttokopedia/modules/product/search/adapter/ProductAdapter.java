@@ -1,10 +1,13 @@
 package com.tokopedia.producttokopedia.modules.product.search.adapter;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +24,7 @@ import java.util.List;
  * Created by Tokopedia01 on 5/21/2016.
  */
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+    Context context;
     List<Product> products;
     EndlessScrollListener endlessScrollListener;
     static final int VISIBLE_THRESHOLD = 1;
@@ -30,6 +34,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public ProductAdapter(List<Product> products) {
+        this.products = products;
+    }
+
+    public ProductAdapter(Context context, List<Product> products) {
+        this.context = context;
         this.products = products;
     }
 
@@ -48,6 +57,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             if (productName.length() > 20){
                 productName = productName.substring(0, 19) + "...";
             }
+        holder.llBadge.removeAllViews();
+        if (!this.products.get(position).getProductWholeSale().equalsIgnoreCase("0")){
+            TextView tv = new TextView(this.context);
+            tv.setText(context.getString(R.string.grosir));
+            tv.setPadding(10, 1, 10, 1);
+            tv.setBackgroundColor(context.getResources().getColor(R.color.light_blue));
+            tv.setTextColor(Color.WHITE);
+            LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            holder.llBadge.addView(tv, llParams);
+        }
+        holder.flGoldContainer.removeAllViews();
+        String goldShop = this.products.get(position).getShopGold();
+        if (!goldShop.equalsIgnoreCase("0")){
+            final float scale = context.getResources().getDisplayMetrics().density;
+            int dpWidth = (int) (30 * scale);
+            LinearLayout.LayoutParams llParams =
+                    new LinearLayout.LayoutParams(dpWidth, dpWidth);
+            ImageView iv = new ImageView(this.context);
+            iv.setBackgroundResource(R.mipmap.ic_gold_merchand);
+            holder.flGoldContainer.addView(iv, llParams);
+        }
         holder.tvName.setText(productName);
         holder.tvPrice.setText(this.products.get(position).getProductPrice());
         holder.tvShopName.setText(this.products.get(position).getShopName());
@@ -84,6 +115,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         TextView tvName;
         TextView tvPrice;
         TextView tvShopName;
+        FrameLayout flGoldContainer;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -92,6 +124,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             tvPrice = (TextView) itemView.findViewById(R.id.tvPrice);
             tvShopName = (TextView) itemView.findViewById(R.id.tvShopName);
+            flGoldContainer = (FrameLayout) itemView.findViewById(R.id.flGoldContainer);
         }
     }
 

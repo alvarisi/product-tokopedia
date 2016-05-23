@@ -46,19 +46,26 @@
             android:id="@+id/tvPrice"
             android:text="@string/product_price"
             />
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:textColor="@color/gray_dark"
                 android:id="@+id/tvShopName"
                 android:text="@string/shop_name"
+                android:layout_alignParentLeft="true"
                 />
-        </LinearLayout>
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@+id/flGoldContainer"
+                >
+            </FrameLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
